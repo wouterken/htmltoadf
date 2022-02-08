@@ -1,0 +1,35 @@
+[package]
+name = "htmltoadf"
+version = "0.1.1"
+edition = "2021"
+license = "MIT"
+description = "An HTML to Atlassian Document Format (ADF) converter"
+homepage ="https://github.com/wouterken/htmltoadf"
+repository = "https://github.com/wouterken/htmltoadf"
+readme = "README.md"
+keywords = ["html", "adf", "atlassian", "converter", "cli"]
+documentation = "https://docs.rs/htmltoadf/0.1.0/htmltoadf/fn.convert_html_str_to_adf_str.html"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+[lib]
+name = "htmltoadf"
+path = "src/lib.rs"
+crate-type = ["rlib", "dylib"]
+
+[[bin]]
+name = "htmltoadf"
+path = "src/bin.rs"
+
+[dependencies]
+scraper = "0.12.0"
+ego-tree = "0.6"
+lazy_static = "1.4.0"
+serde_json = {version ="1.0.59", features = ["preserve_order"]}
+regex = "1.5.4"
+wasm-bindgen = "0.2"
+
+[target.'cfg(target_arch = "wasm32")'.dependencies]
+parking_lot_core = "=0.8.0"
+
+[profile.release]
+lto = true
