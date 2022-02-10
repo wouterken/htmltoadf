@@ -22,7 +22,7 @@ fn top_level() {
                         </li>
                         <li>
                             <div style='color: #0F0'>
-                                <span> With some blue text inside </span>
+                                <span>With some blue text inside</span>
                             </div>
                         </li>
                         <li>

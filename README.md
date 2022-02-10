@@ -31,20 +31,20 @@ https://wouterken.github.io/htmltoadf/
 ### Install Binary from Crates.io with `cargo install`
 ```
 $ cargo install htmltoadf
-    installing htmltoadf v0.1.4 (/usr/src/html2adf)
+    installing htmltoadf v0.1.5 (/usr/src/html2adf)
     Updating crates.io index
  Downloading crates ...
   Downloaded lock_api v0.4.6
 --snip--
-      Compiling htmltoadf v0.1.4
+      Compiling htmltoadf v0.1.5
     Finished release [optimized] target(s) in 1m 42s
   Installing ~/.cargo/bin/htmltoadf
-   Installed package `htmltoadf v0.1.4` (executable `html2adf`)
+   Installed package `htmltoadf v0.1.5` (executable `html2adf`)
 ```
 
 ### Download Binary file from Github
 Pre-built binaries can be downloaded from here:
-https://github.com/wouterken/htmltoadf/releases/tag/0.1.2
+https://github.com/wouterken/htmltoadf/releases/tag/0.1.5
 
 ### Docker Image
 **Docker Repo:**
@@ -54,10 +54,10 @@ https://hub.docker.com/r/wouterken/html2adf
 **Usage**
 
 ```bash
-$ echo "<h1>Hello world<p>Test</p></h1>" | docker run --rm -i wouterken/html2adf:0.1.4
+$ echo "<h1>Hello world<p>Test</p></h1>" | docker run --rm -i wouterken/html2adf:0.1.5
 {"version":1,"type":"doc","content":[{"type":"heading","attrs":{"level":1},"content":[{"type":"text","text":"Hello world"},{"type":"text","text":"Test"}]}]}
 
-$ echo "<h1>Hello world<p>Test</p></h1>" | docker run --rm -i wouterken/html2adf:0.1.4 | jq
+$ echo "<h1>Hello world<p>Test</p></h1>" | docker run --rm -i wouterken/html2adf:0.1.5 | jq
 {
   "version": 1,
   "type": "doc",
@@ -90,7 +90,7 @@ $ echo "<h1>Hello world<p>Test</p></h1>" | docker run --rm -i wouterken/html2adf
 
 ```toml
 [dependencies]
-htmltoadf = "0.1.4"
+htmltoadf = "0.1.5"
 ```
 
 **Code**
@@ -201,6 +201,7 @@ The following features are implemented:
 * Compile binaries and create release
 * Build and push Docker image
 * Build and push WASM NPM package
+* Push crate
 * Update dependency in demo page
 * Push to VCS
 

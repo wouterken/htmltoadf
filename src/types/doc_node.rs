@@ -5,7 +5,7 @@ use std::fmt;
 
 pub struct DocNode<'a> {
     pub name: &'a str,
-    pub text: &'a str,
+    pub text: String,
     pub node: NodeRef<'a, Node>,
 }
 

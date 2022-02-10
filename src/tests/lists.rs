@@ -167,7 +167,7 @@ fn nested_1() {
                       "content": [
                         {
                           "type": "text",
-                          "text": "Nested List"
+                          "text": " Nested List "
                         }
                       ]
                     },

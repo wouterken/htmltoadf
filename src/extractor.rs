@@ -23,6 +23,14 @@ pub fn esc_hr(hrstr: String) -> String {
 }
 
 /**
+ * Squish surrounding whitespace to a single space if it exists.
+ */
+pub fn squish_surrounding_whitespace(input: &str) -> String {
+    let re = Regex::new(r"^\s+|\s+$").unwrap();
+    re.replace_all(input, " ").to_string()
+}
+
+/**
  * We parse a raw scraper::HTML and return a
  * list of leaf doc nodes  (each with a linked list pointer to the root)
  * for us to attempt to transform into an ADF Document
@@ -38,13 +46,13 @@ pub fn extract_leaves(fragment: &Html) -> Vec<DocNode> {
                     if element.value().name() == "iframe" || element.value().name() == "img" {
                         leaf_nodes.push(DocNode {
                             name: element.value().name().trim(),
-                            text: "".trim(),
+                            text: "".trim().to_owned(),
                             node,
                         })
                     } else if element.value().name() == HRBR_PLACEHOLDER {
                         leaf_nodes.push(DocNode {
                             name: "hr",
-                            text: "".trim(),
+                            text: "".trim().to_owned(),
                             node,
                         })
                     }
@@ -52,8 +60,8 @@ pub fn extract_leaves(fragment: &Html) -> Vec<DocNode> {
                     if !text_node.text.trim().is_empty() {
                         leaf_nodes.push(DocNode {
                             name: "text",
-                            text: text_node.text.trim(),
-                            node: node,
+                            text: squish_surrounding_whitespace(&text_node.text),
+                            node,
                         })
                     }
                 }
