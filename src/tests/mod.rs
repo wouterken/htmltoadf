@@ -1,3 +1,4 @@
+mod colors;
 #[cfg(test)]
 mod combination;
 mod empty;

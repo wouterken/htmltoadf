@@ -303,7 +303,7 @@ fn extract_styles(node: &ElementRef) -> Option<Vec<Vec<String>>> {
  */
 fn hex_code_for_color_str(color_str: String) -> Option<String> {
     lazy_static! {
-        static ref FULLHEX: Regex = Regex::new(r"(?i)#[0-9A-F]{6}").unwrap();
+        static ref FULLHEX: Regex = Regex::new(r"(?i)#([0-9A-F]{6})").unwrap();
         static ref HALFHEX: Regex = Regex::new(r"(?i)#([0-9A-F])([0-9A-F])([0-9A-F])").unwrap();
         static ref RGB: Regex =
             Regex::new(r"(?i)RGB\(\s*(\d+)\s*,\s*(\d+)\s*,\s*(\d+)\s*\)").unwrap();
@@ -311,7 +311,8 @@ fn hex_code_for_color_str(color_str: String) -> Option<String> {
             Regex::new(r"(?i)RGBA\(\s*(\d+)\s*,\s*(\d+)\s*,\s*(\d+)\s*,\s*(\d+)\s*\)").unwrap();
     }
     if FULLHEX.is_match(&color_str) {
-        return Some(color_str);
+        let captures = FULLHEX.captures(&color_str).unwrap();
+        return Some(format!("{}", &captures[1]));
     } else if HALFHEX.is_match(&color_str) {
         let captures = HALFHEX.captures(&color_str).unwrap();
         let (r, g, b) = (&captures[1], &captures[2], &captures[3]);

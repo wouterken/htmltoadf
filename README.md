@@ -19,21 +19,27 @@ The library can be used in several different ways:
 <img src="./screenshot-light.png" width=350/><img src="./screenshot-dark.png" width=350/>
 
 ----
+## Demo
+
+See demo of the tool running as a WASM library entirely in the client here:
+https://wouterken.github.io/htmltoadf/
+
+----
 
 ## CLI
 ### Binaries
 ### Install Binary from Crates.io with `cargo install`
 ```
 $ cargo install htmltoadf
-    installing htmltoadf v0.1.3 (/usr/src/html2adf)
+    installing htmltoadf v0.1.4 (/usr/src/html2adf)
     Updating crates.io index
  Downloading crates ...
   Downloaded lock_api v0.4.6
 --snip--
-      Compiling htmltoadf v0.1.3
+      Compiling htmltoadf v0.1.4
     Finished release [optimized] target(s) in 1m 42s
   Installing ~/.cargo/bin/htmltoadf
-   Installed package `htmltoadf v0.1.3` (executable `html2adf`)
+   Installed package `htmltoadf v0.1.4` (executable `html2adf`)
 ```
 
 ### Download Binary file from Github
@@ -43,15 +49,15 @@ https://github.com/wouterken/htmltoadf/releases/tag/0.1.2
 ### Docker Image
 **Docker Repo:**
 
-https://hub.docker.com/repository/docker/wouterken/html2adf
+https://hub.docker.com/r/wouterken/html2adf
 
 **Usage**
 
 ```bash
-$ echo "<h1>Hello world<p>Test</p></h1>" | docker run --rm -i wouterken/html2adf:0.1.2
+$ echo "<h1>Hello world<p>Test</p></h1>" | docker run --rm -i wouterken/html2adf:0.1.4
 {"version":1,"type":"doc","content":[{"type":"heading","attrs":{"level":1},"content":[{"type":"text","text":"Hello world"},{"type":"text","text":"Test"}]}]}
 
-$ echo "<h1>Hello world<p>Test</p></h1>" | docker run --rm -i wouterken/html2adf:0.1.2 | jq
+$ echo "<h1>Hello world<p>Test</p></h1>" | docker run --rm -i wouterken/html2adf:0.1.4 | jq
 {
   "version": 1,
   "type": "doc",
@@ -84,7 +90,7 @@ $ echo "<h1>Hello world<p>Test</p></h1>" | docker run --rm -i wouterken/html2adf
 
 ```toml
 [dependencies]
-htmltoadf = "0.1.3"
+htmltoadf = "0.1.4"
 ```
 
 **Code**
@@ -189,6 +195,14 @@ The following features are implemented:
 - [ ] Panels
 - [ ] Emoji
 - [ ] In built JSON Schema Validation
+
+## Release Process
+* Increment version number in .toml and README
+* Compile binaries and create release
+* Build and push Docker image
+* Build and push WASM NPM package
+* Update dependency in demo page
+* Push to VCS
 
 ## Testing
 Run `cargo test` from the repository root.
