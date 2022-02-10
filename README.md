@@ -18,12 +18,25 @@ The library can be used in several different ways:
 
 ```toml
 [dependencies]
-htmltoadf = "0.1.0"
+htmltoadf = "0.1.2"
 ```
 
 ## CLI
 ### Binaries
-*TODO*
+### Install Binary from Crates.io with `cargo install`
+```
+$ cargo install htmltoadf
+    installing htmltoadf v0.1.2 (/usr/src/html2adf)
+    Updating crates.io index
+ Downloading crates ...
+  Downloaded lock_api v0.4.6
+--snip--
+      Compiling htmltoadf v0.1.2
+    Finished release [optimized] target(s) in 1m 42s
+  Installing ~/.cargo/bin/htmltoadf
+   Installed package `htmltoadf v0.1.2` (executable `htmltoadf`)
+```
+
 ### Docker Image
 *TODO*
 

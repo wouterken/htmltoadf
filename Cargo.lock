@@ -184,7 +184,7 @@ dependencies = [
 
 [[package]]
 name = "htmltoadf"
-version = "0.1.0"
+version = "0.1.1"
 dependencies = [
  "ego-tree",
  "lazy_static",
