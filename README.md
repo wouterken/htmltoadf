@@ -11,25 +11,84 @@
 The library can be used in several different ways:
 * As a command line binary (either directly on a compatible host or using Docker)
 * Included as a library within a Rust project
-* Called from a different language or environment (e.g. C, JavaScript, Ruby, PHP, .NET, ) using [FFI](https://doc.rust-lang.org/nomicon/ffi.html)
+* Called from a different language or environment (e.g. C, JavaScript, Ruby, PHP, .NET etc.) using [FFI](https://doc.rust-lang.org/nomicon/ffi.html)
 * Called as a Web Assembly (wasm) module
 
 ----
 
-```toml
-[dependencies]
-htmltoadf = "0.1.0"
-```
+<img src="./screenshot-light.png" width=350/><img src="./screenshot-dark.png" width=350/>
+
+----
 
 ## CLI
 ### Binaries
-*TODO*
+### Install Binary from Crates.io with `cargo install`
+```
+$ cargo install htmltoadf
+    installing htmltoadf v0.1.3 (/usr/src/html2adf)
+    Updating crates.io index
+ Downloading crates ...
+  Downloaded lock_api v0.4.6
+--snip--
+      Compiling htmltoadf v0.1.3
+    Finished release [optimized] target(s) in 1m 42s
+  Installing ~/.cargo/bin/htmltoadf
+   Installed package `htmltoadf v0.1.3` (executable `html2adf`)
+```
+
+### Download Binary file from Github
+Pre-built binaries can be downloaded from here:
+https://github.com/wouterken/htmltoadf/releases/tag/0.1.2
+
 ### Docker Image
-*TODO*
+**Docker Repo:**
+
+https://hub.docker.com/repository/docker/wouterken/html2adf
+
+**Usage**
+
+```bash
+$ echo "<h1>Hello world<p>Test</p></h1>" | docker run --rm -i wouterken/html2adf:0.1.2
+{"version":1,"type":"doc","content":[{"type":"heading","attrs":{"level":1},"content":[{"type":"text","text":"Hello world"},{"type":"text","text":"Test"}]}]}
+
+$ echo "<h1>Hello world<p>Test</p></h1>" | docker run --rm -i wouterken/html2adf:0.1.2 | jq
+{
+  "version": 1,
+  "type": "doc",
+  "content": [
+    {
+      "type": "heading",
+      "attrs": {
+        "level": 1
+      },
+      "content": [
+        {
+          "type": "text",
+          "text": "Hello world"
+        },
+        {
+          "type": "text",
+          "text": "Test"
+        }
+      ]
+    }
+  ]
+}
+```
 
 ## Lib
 
-### Example Code
+### Example Rust Code
+
+**Cargo.toml**
+
+```toml
+[dependencies]
+htmltoadf = "0.1.3"
+```
+
+**Code**
+
 ```rust
 use htmltoadf::convert_html_str_to_adf_str;
 use serde_json::json;
@@ -58,20 +117,78 @@ assert_eq!(expected, converted);
 ```
 
 ### WASM
-*TODO*
+
+Install package from [npm](https://www.npmjs.com/package/htmltoadf)
+
+```javascript
+import init, {convert} from "htmltoadf";
+init()
+  .then(() => {
+    alert(convert("<h1>Hello from WebAssembly</h1>"))
+  });
+```
+
 ### FFI
-*TODO*
+First compile the code as a library, e.g.:
+
+```bash
+cargo build --lib --release
+```
+
+Then you can link to the library dynamic from any environment that supports a FFI.
+**It is important to copy the dynamic library from the release directory, and provide a relative link to the library file from the FFI**
+E.g.
+
+#### Ruby
+```ruby
+require 'ffi'
+
+module HTMLToADF
+  extend FFI::Library
+  ffi_lib 'libhtmltoadf'
+  attach_function :convert, [ :string ], :string
+end
+
+puts HTMLToADF.convert("<h1>Hello from Ruby</h1>")
+```
+
+#### Node/JavaScript
+```javascript
+var ffi = require('ffi-napi');
+
+var htmltoadf = ffi.Library('libhtmltoadf', {
+  'convert': [ 'string', [ 'string' ] ]
+});
+console.log(htmltoadf.convert("<h1>Hello from Node!</h1>"));
+
+```
+
+#### Python
+```python
+from cffi import FFI
+ffi = FFI()
+lib = ffi.dlopen("libhtmltoadf")
+ffi.cdef("char * convert(char *);")
+print(ffi.string(lib.convert(b"<h1>Hello from Python!</h1>")))
+
+```
 
 ## Implemented features
 This converter only implements a subset of possible mappings between HTML and ADF.
-The following conversions are implemented:
-* Headings
-* Images
-* Lists (ordered and unordered)
-* Tables
-* Text and Paragraphs
-* Code
-
+The following features are implemented:
+- [x] Headings
+- [x] Images
+- [x] Lists (ordered and unordered)
+- [x] Tables
+- [x] Text and Paragraphs
+- [x] Code
+- [ ] Fuzz Tests
+- [ ] Support for named CSS colors
+- [ ] Smart image sizing
+- [ ] Inline Cards
+- [ ] Panels
+- [ ] Emoji
+- [ ] In built JSON Schema Validation
 
 ## Testing
 Run `cargo test` from the repository root.

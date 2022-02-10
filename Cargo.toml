@@ -1,6 +1,6 @@
 [package]
 name = "htmltoadf"
-version = "0.1.1"
+version = "0.1.3"
 edition = "2021"
 license = "MIT"
 description = "An HTML to Atlassian Document Format (ADF) converter"
@@ -14,10 +14,10 @@ documentation = "https://docs.rs/htmltoadf/0.1.0/htmltoadf/fn.convert_html_str_t
 [lib]
 name = "htmltoadf"
 path = "src/lib.rs"
-crate-type = ["rlib", "dylib"]
+crate-type = ["rlib", "cdylib"]
 
 [[bin]]
-name = "htmltoadf"
+name = "html2adf"
 path = "src/bin.rs"
 
 [dependencies]
