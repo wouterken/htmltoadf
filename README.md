@@ -28,23 +28,48 @@ https://wouterken.github.io/htmltoadf/
 
 ## CLI
 ### Binaries
+
+The htmltoadf tool includes an html2adf binary.
+
+#### Usage
+
+```bash
+$ html2adf -h
+```
+
+```
+htmltoadf 0.1.6
+An HTML to Atlassian Document Format (ADF) converter
+
+USAGE:
+    html2adf [OPTIONS] [INPATH]
+
+ARGS:
+    <INPATH>    The path to the file to read
+
+OPTIONS:
+    -h, --help                 Print help information
+    -o, --outpath <OUTPATH>
+    -V, --version              Print version information
+```
+
 ### Install Binary from Crates.io with `cargo install`
 ```
 $ cargo install htmltoadf
-    installing htmltoadf v0.1.5 (/usr/src/html2adf)
+    installing htmltoadf v0.1.6 (/usr/src/html2adf)
     Updating crates.io index
  Downloading crates ...
   Downloaded lock_api v0.4.6
 --snip--
-      Compiling htmltoadf v0.1.5
+      Compiling htmltoadf v0.1.6
     Finished release [optimized] target(s) in 1m 42s
   Installing ~/.cargo/bin/htmltoadf
-   Installed package `htmltoadf v0.1.5` (executable `html2adf`)
+   Installed package `htmltoadf v0.1.6` (executable `html2adf`)
 ```
 
 ### Download Binary file from Github
 Pre-built binaries can be downloaded from here:
-https://github.com/wouterken/htmltoadf/releases/tag/0.1.5
+https://github.com/wouterken/htmltoadf/releases/tag/0.1.6
 
 ### Docker Image
 **Docker Repo:**
@@ -54,10 +79,10 @@ https://hub.docker.com/r/wouterken/html2adf
 **Usage**
 
 ```bash
-$ echo "<h1>Hello world<p>Test</p></h1>" | docker run --rm -i wouterken/html2adf:0.1.5
+$ echo "<h1>Hello world<p>Test</p></h1>" | docker run --rm -i wouterken/html2adf:0.1.6
 {"version":1,"type":"doc","content":[{"type":"heading","attrs":{"level":1},"content":[{"type":"text","text":"Hello world"},{"type":"text","text":"Test"}]}]}
 
-$ echo "<h1>Hello world<p>Test</p></h1>" | docker run --rm -i wouterken/html2adf:0.1.5 | jq
+$ echo "<h1>Hello world<p>Test</p></h1>" | docker run --rm -i wouterken/html2adf:0.1.6 | jq
 {
   "version": 1,
   "type": "doc",
@@ -90,7 +115,7 @@ $ echo "<h1>Hello world<p>Test</p></h1>" | docker run --rm -i wouterken/html2adf
 
 ```toml
 [dependencies]
-htmltoadf = "0.1.5"
+htmltoadf = "0.1.6"
 ```
 
 **Code**
@@ -143,6 +168,8 @@ cargo build --lib --release
 
 Then you can link to the library dynamic from any environment that supports a FFI.
 **It is important to copy the dynamic library from the release directory, and provide a relative link to the library file from the FFI**
+
+
 E.g.
 
 #### Ruby

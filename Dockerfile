@@ -8,4 +8,5 @@ RUN cargo install --path .
 FROM debian:buster-slim
 COPY --from=builder /usr/local/cargo/bin/html2adf /usr/local/bin/html2adf
 
-CMD ["html2adf"]
+ENTRYPOINT ["html2adf"]
+CMD []

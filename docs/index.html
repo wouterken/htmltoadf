@@ -40,6 +40,7 @@
   position: relative;
   flex: 1 1 50%;
   min-width: 300px;
+  min-height: 200px;
 }
 
 .btn-toggle{
@@ -78,7 +79,7 @@
 
 </style>
 <script defer type="module">
- import init, {convert} from "https://unpkg.com/htmltoadf@0.1.5/htmltoadf.js";
+ import init, {convert} from "https://unpkg.com/htmltoadf@0.1.6/htmltoadf.js";
 
  let editor;
 
@@ -132,8 +133,9 @@
        inputRaw.value = editor.getContent()
        output(editor.getContent())
      })
-
-
+     editor.on('init', () => {
+       editor.setContent(INITIAL_CONTENT)
+     })
    }
  })
 
@@ -160,7 +162,6 @@
 
  init().then(() => {
   inputRaw.value = INITIAL_CONTENT
-  editor.setContent(INITIAL_CONTENT)
   output(INITIAL_CONTENT)
 })
 </script>
