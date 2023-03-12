@@ -34,107 +34,151 @@ fn top_level() {
             </html>
         ",
         json!({
-          "version": 1,
-          "type": "doc",
-          "content": [
-            {
-              "type": "paragraph",
-              "content": [
+            "version": 1,
+            "type": "doc",
+            "content":
+            [
                 {
-                  "type": "text",
-                  "text": "A Paragraph"
-                }
-              ]
-            },
-            {
-              "type": "bulletList",
-              "content": [
-                {
-                  "type": "listItem",
-                  "content": [
-                    {
-                      "type": "paragraph",
-                      "content": [
+                    "type": "paragraph",
+                    "content":
+                    [
                         {
-                          "type": "text",
-                          "text": "An unordered list"
+                            "type": "text",
+                            "text": "A Paragraph"
                         }
-                      ]
-                    }
-                  ]
+                    ]
                 },
                 {
-                  "type": "listItem",
-                  "content": [
-                    {
-                      "type": "paragraph",
-                      "content": [
+                    "type": "bulletList",
+                    "content":
+                    [
                         {
-                          "type": "text",
-                          "text": "Some Content"
-                        }
-                      ]
-                    },
-                    {
-                      "type": "orderedList",
-                      "content": [
-                        {
-                          "type": "listItem",
-                          "content": [
-                            {
-                              "type": "paragraph",
-                              "content": [
+                            "type": "listItem",
+                            "content":
+                            [
                                 {
-                                  "type": "text",
-                                  "text": "With an ordered list inside it"
+                                    "type": "paragraph",
+                                    "content":
+                                    [
+                                        {
+                                            "type": "text",
+                                            "text": "An unordered list"
+                                        }
+                                    ]
                                 }
-                              ]
-                            }
-                          ]
-                        }
-                      ]
-                    }
-                  ]
-                },
-                {
-                  "type": "listItem",
-                  "content": [
-                    {
-                      "type": "paragraph",
-                      "content": [
+                            ]
+                        },
                         {
-                          "type": "text",
-                          "text": "With some blue text inside",
-                          "marks": [
-                            {
-                              "type": "textColor",
-                              "attrs": {
-                                "color": "#00FF00"
-                              }
-                            }
-                          ]
-                        }
-                      ]
-                    }
-                  ]
-                },
-                {
-                  "type": "listItem",
-                  "content": [
-                    {
-                      "type": "paragraph",
-                      "content": [
+                            "type": "listItem",
+                            "content":
+                            [
+                                {
+                                    "type": "paragraph",
+                                    "content":
+                                    [
+                                        {
+                                            "type": "text",
+                                            "text": "Some Content"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "type": "orderedList",
+                                    "content":
+                                    [
+                                        {
+                                            "type": "listItem",
+                                            "content":
+                                            [
+                                                {
+                                                    "type": "paragraph",
+                                                    "content":
+                                                    [
+                                                        {
+                                                            "type": "text",
+                                                            "text": "With an ordered list inside it"
+                                                        }
+                                                    ]
+                                                }
+                                            ]
+                                        }
+                                    ]
+                                }
+                            ]
+                        },
                         {
-                          "type": "text",
-                          "text": "And an image!"
+                            "type": "listItem",
+                            "content":
+                            [
+                                {
+                                    "type": "paragraph",
+                                    "content":
+                                    [
+                                        {
+                                            "type": "text",
+                                            "text": " ",
+                                            "marks":
+                                            [
+                                                {
+                                                    "type": "textColor",
+                                                    "attrs":
+                                                    {
+                                                        "color": "#00FF00"
+                                                    }
+                                                }
+                                            ]
+                                        },
+                                        {
+                                            "type": "text",
+                                            "text": "With some blue text inside",
+                                            "marks":
+                                            [
+                                                {
+                                                    "type": "textColor",
+                                                    "attrs":
+                                                    {
+                                                        "color": "#00FF00"
+                                                    }
+                                                }
+                                            ]
+                                        },
+                                        {
+                                            "type": "text",
+                                            "text": " ",
+                                            "marks":
+                                            [
+                                                {
+                                                    "type": "textColor",
+                                                    "attrs":
+                                                    {
+                                                        "color": "#00FF00"
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    ]
+                                }
+                            ]
+                        },
+                        {
+                            "type": "listItem",
+                            "content":
+                            [
+                                {
+                                    "type": "paragraph",
+                                    "content":
+                                    [
+                                        {
+                                            "type": "text",
+                                            "text": "And an image!"
+                                        }
+                                    ]
+                                }
+                            ]
                         }
-                      ]
-                    }
-                  ]
+                    ]
                 }
-              ]
-            }
-          ]
+            ]
         }),
-    );
+    )
 }

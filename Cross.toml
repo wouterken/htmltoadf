@@ -1,3 +1,4 @@
 # all the targets will use `xargo`
 [build]
 xargo = true
+build-std = true

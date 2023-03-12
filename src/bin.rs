@@ -6,7 +6,7 @@ use std::io::Read;
 
 /// Convert the given file to adf
 #[derive(Parser)]
-#[clap(author, version, about, long_about = None)]
+#[clap(author="Wouter Coppieters", version="0.1.7", about = None, long_about = None)]
 struct Cli {
     /// The path to the file to read
     #[clap(parse(from_os_str))]

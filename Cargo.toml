@@ -1,6 +1,6 @@
 [package]
 name = "htmltoadf"
-version = "0.1.6"
+version = "0.1.7"
 edition = "2021"
 license = "MIT"
 description = "An HTML to Atlassian Document Format (ADF) converter"
@@ -9,6 +9,7 @@ repository = "https://github.com/wouterken/htmltoadf"
 readme = "README.md"
 keywords = ["html", "adf", "atlassian", "converter", "cli"]
 documentation = "https://docs.rs/htmltoadf/0.1.0/htmltoadf/fn.convert_html_str_to_adf_str.html"
+authors = ["Wouter Coppieters"]
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 [lib]
@@ -34,3 +35,4 @@ parking_lot_core = "=0.8.0"
 
 [profile.release]
 lto = true
+opt-level = 's'

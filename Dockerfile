@@ -1,4 +1,4 @@
-FROM rust:1.58-buster as builder
+FROM rust:1.68-buster as builder
 
 WORKDIR /usr/src/html2adf
 COPY . .
