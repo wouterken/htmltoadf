@@ -11,7 +11,7 @@ use scraper::ElementRef;
 use scraper::Html;
 use serde_json::{Map, Value};
 
-static VALID_EMPTY_TYPES: [&str; 3] = ["hr", "iframe", "img"];
+static VALID_EMPTY_TYPES: [&str; 4] = ["hr", "iframe", "img", "br"];
 
 /**
 * The main procedure for our ADF Builder.
@@ -122,6 +122,15 @@ fn build_adf_doc(leaf_nodes: Vec<DocNode>) -> NodeList {
                 );
             }
             "hr" => {
+                node_list.push_anon(
+                    insertion_point,
+                    content_type.typename.to_string(),
+                    "".to_string(),
+                    &[],
+                    vec![],
+                );
+            }
+            "br" => {
                 node_list.push_anon(
                     insertion_point,
                     content_type.typename.to_string(),

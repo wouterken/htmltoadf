@@ -1,5 +1,12 @@
+./target
+./pkg
+./test_cases
+./tmp
+./releases
 /target
 /pkg
 /test_cases
 /tmp
+/releases
 .DS_Store
+.git

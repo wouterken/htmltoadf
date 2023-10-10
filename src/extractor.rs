@@ -57,6 +57,12 @@ pub fn extract_leaves(fragment: &Html) -> Vec<DocNode> {
                             text: "".trim().to_owned(),
                             node,
                         })
+                    } else if element.value().name() == "br" {
+                        leaf_nodes.push(DocNode {
+                            name: "br",
+                            text: "".trim().to_owned(),
+                            node,
+                        })
                     }
                 } else if let Node::Text(text_node) = node.value() {
                     if let Some(parent) = node.parent().and_then(ElementRef::wrap) {

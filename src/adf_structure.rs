@@ -18,11 +18,11 @@ lazy_static! {
   pub static ref LEGAL_CHILD_TYPES: HashMap<String, AdfPermittedChildren> = HashMap::from([
     (
       String::from("paragraph"),
-      AdfPermittedChildren::any(&["text", "emoji"])
+      AdfPermittedChildren::any(&["text", "emoji", "hardBreak"])
     ),
     (
       String::from("heading"),
-      AdfPermittedChildren::any(&["text", "emoji"])
+      AdfPermittedChildren::any(&["text", "emoji", "hardBreak"])
     ),
     (
       String::from("bulletList"),
@@ -102,6 +102,10 @@ lazy_static! {
     (
       "hr",
       AdfContentType::from_name("rule")
+    ),
+    (
+      "br",
+      AdfContentType::from_name("hardBreak")
     ),
     (
       "html",

@@ -7,6 +7,7 @@ use super::adf_node::AdfNode;
 pub type NodeHandle = usize;
 
 #[derive(Default)]
+#[derive(Debug)]
 pub struct NodeList {
     pub nodes: Vec<AdfNode>,
     pub handles: HashMap<NodeId, NodeHandle>,
@@ -166,6 +167,7 @@ impl NodeList {
                     String::from("media"),
                     String::from("emoji"),
                     String::from("rule"),
+                    String::from("hardBreak")
                 ];
 
                 if !node.children.is_empty() {
