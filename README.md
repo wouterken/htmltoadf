@@ -38,7 +38,7 @@ $ html2adf -h
 ```
 
 ```
-htmltoadf 0.1.8
+htmltoadf 0.1.9
 An HTML to Atlassian Document Format (ADF) converter
 
 USAGE:
@@ -56,20 +56,20 @@ OPTIONS:
 ### Install Binary from Crates.io with `cargo install`
 ```
 $ cargo install htmltoadf
-    installing htmltoadf v0.1.8 (/usr/src/html2adf)
+    installing htmltoadf v0.1.9 (/usr/src/html2adf)
     Updating crates.io index
  Downloading crates ...
   Downloaded lock_api v0.4.6
 --snip--
-      Compiling htmltoadf v0.1.8
+      Compiling htmltoadf v0.1.9
     Finished release [optimized] target(s) in 1m 42s
   Installing ~/.cargo/bin/htmltoadf
-   Installed package `htmltoadf v0.1.8` (executable `html2adf`)
+   Installed package `htmltoadf v0.1.9` (executable `html2adf`)
 ```
 
 ### Download Binary file from Github
 Pre-built binaries can be downloaded from here:
-https://github.com/wouterken/htmltoadf/releases/tag/0.1.8
+https://github.com/wouterken/htmltoadf/releases/tag/0.1.9
 
 ### Docker Image
 **Docker Repo:**
@@ -79,10 +79,10 @@ https://hub.docker.com/r/wouterken/html2adf
 **Usage**
 
 ```bash
-$ echo "<h1>Hello world<p>Test</p></h1>" | docker run --rm -i wouterken/html2adf:0.1.8
+$ echo "<h1>Hello world<p>Test</p></h1>" | docker run --rm -i wouterken/html2adf:0.1.9
 {"version":1,"type":"doc","content":[{"type":"heading","attrs":{"level":1},"content":[{"type":"text","text":"Hello world"},{"type":"text","text":"Test"}]}]}
 
-$ echo "<h1>Hello world<p>Test</p></h1>" | docker run --rm -i wouterken/html2adf:0.1.8 | jq
+$ echo "<h1>Hello world<p>Test</p></h1>" | docker run --rm -i wouterken/html2adf:0.1.9 | jq
 {
   "version": 1,
   "type": "doc",
@@ -115,7 +115,7 @@ $ echo "<h1>Hello world<p>Test</p></h1>" | docker run --rm -i wouterken/html2adf
 
 ```toml
 [dependencies]
-htmltoadf = "0.1.8"
+htmltoadf = "0.1.9"
 ```
 
 **Code**

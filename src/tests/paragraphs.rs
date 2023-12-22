@@ -179,16 +179,10 @@ fn top_level() {
                 {
                     "type": "text",
                     "text": " Naked "
-                }
-                ]
-            },
-            {
-                "type": "hardBreak"
-            },
-            {
-                "type": "paragraph",
-                "content":
-                [
+                },
+                {
+                    "type": "hardBreak"
+                },
                 {
                     "type": "text",
                     "text": " break "

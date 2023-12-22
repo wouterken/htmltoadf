@@ -9,6 +9,7 @@ mkdir -p "releases/${RELEASE_NAME}"
 
 # Read targets from .targets file and build
 if [ -f .targets ]; then
+    cat .targets | xargs -I {} rustup target add {}
     cat .targets | xargs -I {} cargo zigbuild --target {} --release -Z unstable-options --out-dir="./releases/${RELEASE_NAME}/{}" || true
     echo "Build completed. Output files are in releases/${RELEASE_NAME}/ directory."
 

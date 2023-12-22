@@ -123,7 +123,7 @@ impl NodeList {
     /**
      * Convert a NodeList into a JSON document
      */
-    pub fn to_json(&mut self) -> String {
+    pub fn to_json(&self) -> String {
         let mut root_node: Map<String, Value> = Map::new();
         root_node.insert(
             "version".to_string(),
@@ -140,7 +140,7 @@ impl NodeList {
      * Insert the AdfNode at the given location into our
      * JSON document.
      */
-    fn insert_node_into_json(&mut self, node_handle: NodeHandle, json: &mut Map<String, Value>) {
+    fn insert_node_into_json(&self, node_handle: NodeHandle, json: &mut Map<String, Value>) {
         match self.node(node_handle) {
             Some(node) => {
                 json.insert(

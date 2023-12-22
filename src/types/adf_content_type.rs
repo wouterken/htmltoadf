@@ -17,11 +17,13 @@ pub struct AdfMark {
     pub attributes: AdfMarkAttributes,
 }
 
+type AttributeExtractor = Option<fn(&ElementRef) -> Vec<(String, Value)>>;
+
 #[derive(Clone, Default)]
 pub struct AdfContentType {
     pub typename: String,
     pub marks: Vec<AdfMark>,
-    pub attributes: Option<fn(&ElementRef) -> Vec<(String, Value)>>,
+    pub attributes: AttributeExtractor,
 }
 
 impl AdfContentType {
