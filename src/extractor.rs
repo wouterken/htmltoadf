@@ -1,4 +1,5 @@
 use ego_tree::iter::Edge;
+use ego_tree::NodeRef;
 use regex::Regex;
 use scraper::Node;
 use scraper::{ElementRef, Html};
@@ -32,6 +33,18 @@ pub fn squish_surrounding_whitespace(input: &str) -> String {
     re.replace_all(input, " ").to_string()
 }
 
+pub fn has_text_node(node: NodeRef<Node>) -> bool {
+    node.children().any(|node| {
+        if let Some(element) = node.value().as_element() {
+            element.name() == "br" || has_text_node(node)
+        }
+        else if let Some(text_node) = node.value().as_text() {
+            !text_node.text.trim().is_empty()
+        } else {
+            false
+        }
+    })
+}
 /**
  * We parse a raw scraper::HTML and return a
  * list of leaf doc nodes  (each with a linked list pointer to the root)
@@ -63,6 +76,15 @@ pub fn extract_leaves(fragment: &Html) -> Vec<DocNode> {
                             text: "".trim().to_owned(),
                             node,
                         })
+                    } else if element.value().name() == "td" {
+                        let has_text_node = has_text_node(node);
+                        if !has_text_node {
+                            leaf_nodes.push(DocNode {
+                                name: "td",
+                                text: "".trim().to_owned(),
+                                node,
+                            })
+                        }
                     }
                 } else if let Node::Text(text_node) = node.value() {
                     if let Some(parent) = node.parent().and_then(ElementRef::wrap) {

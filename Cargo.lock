@@ -260,7 +260,7 @@ dependencies = [
 
 [[package]]
 name = "htmltoadf"
-version = "0.1.9"
+version = "0.1.10"
 dependencies = [
  "clap",
  "ego-tree",

@@ -167,7 +167,8 @@ impl NodeList {
                     String::from("media"),
                     String::from("emoji"),
                     String::from("rule"),
-                    String::from("hardBreak")
+                    String::from("hardBreak"),
+                    String::from("tableCell")
                 ];
 
                 if !node.children.is_empty() {

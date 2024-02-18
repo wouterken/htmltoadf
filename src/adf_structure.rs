@@ -58,7 +58,7 @@ lazy_static! {
     ),
     (
       String::from("tableCell"),
-      AdfPermittedChildren::any(&["codeBlock", "blockCard", "paragraph", "bulletList", "mediaSingle", "orderedList", "heading", "panel", "blockquote", "rule", "mediaGroup", "decisionList", "taskList", "extension", "embedCard", "nestedExpand"])
+      AdfPermittedChildren::any(&["codeBlock", "blockCard", "paragraph", "bulletList", "mediaSingle", "orderedList", "heading", "panel", "blockquote", "rule", "mediaGroup", "decisionList", "taskList", "extension", "embedCard", "nestedExpand", "hardBreak"])
     ),
     (
       String::from("doc"),

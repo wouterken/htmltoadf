@@ -7,6 +7,7 @@ mod image;
 mod lists;
 mod marks;
 mod paragraphs;
+mod tables;
 use crate::convert_html_str_to_adf_str;
 
 #[allow(dead_code)]

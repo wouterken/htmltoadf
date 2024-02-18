@@ -11,7 +11,7 @@ use scraper::ElementRef;
 use scraper::Html;
 use serde_json::{Map, Value};
 
-static VALID_EMPTY_TYPES: [&str; 4] = ["hr", "iframe", "img", "br"];
+static VALID_EMPTY_TYPES: [&str; 5] = ["hr", "iframe", "img", "br", "td"];
 
 /**
 * The main procedure for our ADF Builder.
