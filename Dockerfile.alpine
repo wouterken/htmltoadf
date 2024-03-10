@@ -1,0 +1,26 @@
+FROM --platform=${TARGETPLATFORM:-linux/amd64} rust:1.68-alpine as builder
+
+RUN apk add musl-dev
+
+RUN rustup target add x86_64-unknown-linux-musl
+
+ENV RUSTFLAGS="-C target-feature=-crt-static"
+
+WORKDIR /usr/src/html2adf
+
+COPY Cargo.* ./
+COPY src ./src
+
+RUN cargo test
+RUN cargo build --frozen --target x86_64-unknown-linux-musl --release
+
+
+
+FROM --platform=${TARGETPLATFORM:-linux/amd64} alpine
+
+RUN apk add libgcc
+
+COPY --from=builder /usr/src/html2adf/target/x86_64-unknown-linux-musl/release/html2adf /usr/local/bin/html2adf
+
+ENTRYPOINT ["html2adf"]
+CMD []
