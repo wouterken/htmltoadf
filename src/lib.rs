@@ -33,6 +33,15 @@ pub extern "C" fn convert(html: *const c_char) -> *mut c_char {
         .into_raw()
 }
 
+#[cfg(not(target_family = "wasm"))]
+#[allow(clippy::not_unsafe_ptr_arg_deref)]
+#[no_mangle]
+pub extern "C" fn free_str(c_str: *mut c_char) {
+    unsafe {
+      let _ = CString::from_raw(c_str);
+    }
+}
+
 /**
  * If we are compiling for WASM we do not worry about C FFI compatibility
 */
