@@ -13,12 +13,8 @@ use serde_json::{Map, Value};
 
 static VALID_EMPTY_TYPES: [&str; 5] = ["hr", "iframe", "img", "br", "td"];
 
-/**
-* The main procedure for our ADF Builder.
-* Allows us to take an HTML string and turn it into a valid ADF string.
-*
-*/
-
+/// The main procedure for our ADF Builder.
+/// Allows us to take an HTML string and turn it into a valid ADF string.
 /// ```rust
 /// use htmltoadf::convert_html_str_to_adf_str;
 /// use serde_json::json;
@@ -44,7 +40,6 @@ static VALID_EMPTY_TYPES: [&str; 5] = ["hr", "iframe", "img", "br", "td"];
 /// }).to_string();
 ///assert_eq!(expected, converted);
 /// ```
-
 pub fn convert_html_str_to_adf_str(html: String) -> String {
     let fragment = Html::parse_fragment(&extractor::esc_hr(html));
     let leaf_nodes = extractor::extract_leaves(&fragment);
@@ -151,16 +146,9 @@ fn build_adf_doc(leaf_nodes: Vec<DocNode>) -> NodeList {
                 // If we are a text node and our immediate parent only supports a paragraph we wrap this node inside a paragraph
                 // If a sibling node has already wrapped itself in a paragraph, we will try to use the same paragraph
                 if (insertion_node.is_none()
-                    || !is_valid_child_type(
-                        &insertion_node.unwrap().node_type,
-                        "text",
-                        0,
-                    )
+                    || !is_valid_child_type(&insertion_node.unwrap().node_type, "text", 0)
                     || insertion_point == 1)
-                    && (
-                        content_type.typename.eq("text") ||
-                        content_type.typename.eq("hardBreak")
-                    )
+                    && (content_type.typename.eq("text") || content_type.typename.eq("hardBreak"))
                 {
                     let parent_node = node_list.node(parent);
                     if parent_node.is_some()
@@ -192,8 +180,7 @@ fn build_adf_doc(leaf_nodes: Vec<DocNode>) -> NodeList {
                             &attributes,
                             marks,
                         );
-                    }
-                    else{
+                    } else {
                         node_list.push_anon(
                             current_paragraph_handle,
                             content_type.typename.to_string(),
@@ -217,11 +204,7 @@ fn build_adf_doc(leaf_nodes: Vec<DocNode>) -> NodeList {
                             &attributes,
                             vec![],
                         );
-                        if is_valid_child_type(
-                            &content_type.typename.to_string(),
-                            "text",
-                            0,
-                        ) {
+                        if is_valid_child_type(&content_type.typename.to_string(), "text", 0) {
                             node_list.push_anon(
                                 parent_handle,
                                 "text".to_string(),
@@ -246,13 +229,30 @@ fn build_adf_doc(leaf_nodes: Vec<DocNode>) -> NodeList {
                             );
                         }
                     } else {
-                        node_list.push_anon(
+                        let node_marks = if content_type.typename.eq("hardBreak") {
+                            vec![]
+                        } else {
+                            marks
+                        };
+                        let node_handle = node_list.push_anon(
                             insertion_point,
                             content_type.typename.to_string(),
                             leaf.text.to_string(),
                             &attributes,
-                            marks,
+                            node_marks,
                         );
+                        if leaf.text.is_empty()
+                            && (content_type.typename.eq("tableCell")
+                                || content_type.typename.eq("tableHeader"))
+                        {
+                            node_list.push_anon(
+                                node_handle,
+                                "paragraph".to_string(),
+                                "".to_string(),
+                                &[],
+                                vec![],
+                            );
+                        }
                     }
                 }
             }
@@ -286,9 +286,7 @@ fn insert_adf_mark(marks: &mut Vec<Value>, typename: String, pairs: Vec<(String,
 fn insert_mark_value(marks: &mut Vec<Value>, mark: &AdfMark, node: &ElementRef) {
     let pair_list: Vec<(String, String)> = match &mark.attributes {
         AdfMarkAttributes::List(pairs) => pairs.clone(),
-        AdfMarkAttributes::Generator(lambda) => {
-            lambda(node)
-        }
+        AdfMarkAttributes::Generator(lambda) => lambda(node),
     };
     insert_adf_mark(marks, mark.typename.clone(), pair_list);
 }
@@ -300,9 +298,7 @@ fn extract_styles(node: &ElementRef) -> Option<Vec<Vec<String>>> {
     node.value().attr("style").map(|inline_style| {
         let styles: Vec<_> = inline_style
             .split(';')
-            .map(|p| {
-                return p.split(':').map(|pair| pair.trim().to_string()).collect();
-            })
+            .map(|p| p.split(':').map(|pair| pair.trim().to_string()).collect())
             .filter(|p: &Vec<String>| p.len() == 2)
             .collect();
         styles
@@ -368,9 +364,9 @@ fn build_parent_path(leaf: &DocNode, node_list: &mut NodeList) -> (NodeHandle, V
 
     loop {
         let parent_node = node.parent().and_then(ElementRef::wrap);
-        if parent_node.is_some() {
-            parent_path.push(parent_node.unwrap());
-            node = *parent_node.unwrap()
+        if let Some(parent_node) = parent_node {
+            parent_path.push(parent_node);
+            node = *parent_node;
         } else {
             break;
         }

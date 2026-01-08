@@ -20,9 +20,8 @@ static PLAIN_BLOCK_LEVEL_ELEMENTS: [&str; 2] = ["div", "p"];
 
 pub fn esc_hr(hrstr: String) -> String {
     let re = Regex::new(r"</?hr/?>").unwrap();
-    return re
-        .replace_all(&hrstr, format!("<{HRBR_PLACEHOLDER}></{HRBR_PLACEHOLDER}>"))
-        .to_string();
+    re.replace_all(&hrstr, format!("<{HRBR_PLACEHOLDER}></{HRBR_PLACEHOLDER}>"))
+        .to_string()
 }
 
 /**
@@ -37,8 +36,7 @@ pub fn has_text_node(node: NodeRef<Node>) -> bool {
     node.children().any(|node| {
         if let Some(element) = node.value().as_element() {
             element.name() == "br" || has_text_node(node)
-        }
-        else if let Some(text_node) = node.value().as_text() {
+        } else if let Some(text_node) = node.value().as_text() {
             !text_node.text.trim().is_empty()
         } else {
             false
@@ -50,7 +48,7 @@ pub fn has_text_node(node: NodeRef<Node>) -> bool {
  * list of leaf doc nodes  (each with a linked list pointer to the root)
  * for us to attempt to transform into an ADF Document
  */
-pub fn extract_leaves(fragment: &Html) -> Vec<DocNode> {
+pub fn extract_leaves(fragment: &Html) -> Vec<DocNode<'_>> {
     let mut leaf_nodes: Vec<DocNode> = Vec::new();
     fragment
         .root_element()
@@ -88,7 +86,9 @@ pub fn extract_leaves(fragment: &Html) -> Vec<DocNode> {
                     }
                 } else if let Node::Text(text_node) = node.value() {
                     if let Some(parent) = node.parent().and_then(ElementRef::wrap) {
-                        if PLAIN_BLOCK_LEVEL_ELEMENTS.contains(&parent.value().name()) || !text_node.text.trim().is_empty() {
+                        if PLAIN_BLOCK_LEVEL_ELEMENTS.contains(&parent.value().name())
+                            || !text_node.text.trim().is_empty()
+                        {
                             leaf_nodes.push(DocNode {
                                 name: "text",
                                 text: squish_surrounding_whitespace(&text_node.text),

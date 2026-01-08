@@ -6,13 +6,13 @@ use std::io::Read;
 
 /// Convert the given file to adf
 #[derive(Parser)]
-#[clap(author="Wouter Coppieters", version="0.1.7", about = None, long_about = None)]
+#[command(author = "Wouter Coppieters", version = "0.1.7", long_about = None)]
 struct Cli {
     /// The path to the file to read
-    #[clap(parse(from_os_str))]
+    #[arg(value_name = "FILE")]
     inpath: Option<std::path::PathBuf>,
     // /// The path to the file to output
-    #[clap(short, long)]
+    #[arg(short, long)]
     outpath: Option<std::path::PathBuf>,
 }
 

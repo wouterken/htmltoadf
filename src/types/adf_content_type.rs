@@ -58,7 +58,7 @@ pub fn content_type_for_node_type(nodetype: &str) -> &AdfContentType {
     lazy_static! {
         pub static ref TEXT_TYPE: AdfContentType = AdfContentType::from_name("text");
     };
-    return NODE_MAP.get(nodetype).unwrap_or(&TEXT_TYPE);
+    NODE_MAP.get(nodetype).unwrap_or(&TEXT_TYPE)
 }
 
 pub fn is_valid_child_type(parent_typename: &str, child_typename: &str, index: usize) -> bool {

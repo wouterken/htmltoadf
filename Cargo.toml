@@ -1,6 +1,6 @@
 [package]
 name = "htmltoadf"
-version = "0.1.10"
+version = "0.1.11"
 edition = "2021"
 license = "MIT"
 description = "An HTML to Atlassian Document Format (ADF) converter"
@@ -22,16 +22,16 @@ name = "html2adf"
 path = "src/bin.rs"
 
 [dependencies]
-scraper = "0.12.0"
-ego-tree = "0.6"
-lazy_static = "1.4.0"
-serde_json = {version ="1.0.59", features = ["preserve_order"]}
-regex = "1.5.4"
-wasm-bindgen = "0.2"
-clap = { version = "3.0", features = ["derive"] }
+scraper = "0.25.0"
+ego-tree = "0.10.0"
+lazy_static = "1.5.0"
+serde_json = {version ="1.0.149", features = ["preserve_order"]}
+regex = "1.12.2"
+wasm-bindgen = "0.2.106"
+clap = { version = "4.5.54", features = ["derive"] }
 
 [target.'cfg(target_arch = "wasm32")'.dependencies]
-parking_lot_core = "=0.8.0"
+parking_lot_core = "0.9.12"
 
 [profile.release]
 codegen-units = 1

@@ -38,7 +38,7 @@ pub extern "C" fn convert(html: *const c_char) -> *mut c_char {
 #[no_mangle]
 pub extern "C" fn free_str(c_str: *mut c_char) {
     unsafe {
-      let _ = CString::from_raw(c_str);
+        let _ = CString::from_raw(c_str);
     }
 }
 

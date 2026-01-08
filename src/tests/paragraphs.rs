@@ -24,14 +24,14 @@ fn top_level() {
             }
             ]
         }),
-        );
+    );
 }
 
 #[test]
 /**
  * Nested Paragraphs are flattened
  */
- fn nested() {
+fn nested() {
     assert_output_json_eq(
         "<p>Paragraph<p>Nested</p></p>",
         json!({
@@ -58,14 +58,14 @@ fn top_level() {
             }
             ]
         }),
-        );
+    );
 }
 
 /**
  *  Empty paragraphs
  */
- #[test]
- fn empty_paragraphs() {
+#[test]
+fn empty_paragraphs() {
     assert_output_json_eq(
         "
         <h1>
@@ -151,15 +151,14 @@ fn top_level() {
             }
             ]
         }),
-        );
+    );
 }
-
 
 /**
  *  Empty hard breaks
  */
- #[test]
- fn hard_breaks() {
+#[test]
+fn hard_breaks() {
     assert_output_json_eq(
         "
         Naked <br/> break
@@ -247,6 +246,53 @@ fn top_level() {
                 {
                     "type": "text",
                     "text": " breaks"
+                }
+                ]
+            }
+            ]
+        }),
+    );
+}
+
+#[test]
+fn hard_breaks_drop_marks() {
+    assert_output_json_eq(
+        "<p style=\"color: #1f497d;\">Test<br />Test</p>",
+        json!({
+            "version": 1,
+            "type": "doc",
+            "content":
+            [
+            {
+                "type": "paragraph",
+                "content":
+                [
+                {
+                    "type": "text",
+                    "text": "Test",
+                    "marks": [
+                        {
+                            "type": "textColor",
+                            "attrs": {
+                                "color": "#1f497d"
+                            }
+                        }
+                    ]
+                },
+                {
+                    "type": "hardBreak"
+                },
+                {
+                    "type": "text",
+                    "text": "Test",
+                    "marks": [
+                        {
+                            "type": "textColor",
+                            "attrs": {
+                                "color": "#1f497d"
+                            }
+                        }
+                    ]
                 }
                 ]
             }

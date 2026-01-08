@@ -6,8 +6,7 @@ use super::adf_node::AdfNode;
 
 pub type NodeHandle = usize;
 
-#[derive(Default)]
-#[derive(Debug)]
+#[derive(Default, Debug)]
 pub struct NodeList {
     pub nodes: Vec<AdfNode>,
     pub handles: HashMap<NodeId, NodeHandle>,
@@ -163,20 +162,23 @@ impl NodeList {
                     });
                 }
 
-                let empty_types = vec![
-                    String::from("media"),
-                    String::from("emoji"),
-                    String::from("rule"),
-                    String::from("hardBreak"),
-                    String::from("tableCell")
-                ];
+                let empty_types = ["media", "emoji", "rule", "hardBreak", "tableCell"];
 
                 if !node.children.is_empty() {
                     let mut children = node.children.clone();
+                    let allow_empty_paragraph =
+                        matches!(node.node_type.as_str(), "tableCell" | "tableHeader");
                     children.retain(|child_handle| {
                         let child_node: &AdfNode = self.node(*child_handle).unwrap();
+                        if allow_empty_paragraph
+                            && child_node.node_type == "paragraph"
+                            && child_node.text.is_empty()
+                            && child_node.children.is_empty()
+                        {
+                            return true;
+                        }
                         !(child_node.text.is_empty()
-                            && !empty_types.contains(&child_node.node_type)
+                            && !empty_types.contains(&child_node.node_type.as_str())
                             && child_node.children.is_empty())
                     });
                     json.insert(

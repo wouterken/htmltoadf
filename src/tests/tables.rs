@@ -85,7 +85,12 @@ fn test_empty_cell() {
                       ]
                     },
                     {
-                      "type": "tableCell"
+                      "type": "tableCell",
+                      "content": [
+                        {
+                          "type": "paragraph"
+                        }
+                      ]
                     },
                     {
                       "type": "tableCell",
@@ -120,10 +125,41 @@ fn test_empty_cell() {
 }
 
 #[test]
+fn test_empty_table_cell_is_paragraph() {
+    assert_output_json_eq(
+        "<table><tr><td></td></tr></table>",
+        json!({
+          "version": 1,
+          "type": "doc",
+          "content": [
+            {
+              "type": "table",
+              "content": [
+                {
+                  "type": "tableRow",
+                  "content": [
+                    {
+                      "type": "tableCell",
+                      "content": [
+                        {
+                          "type": "paragraph"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }),
+    );
+}
+
+#[test]
 /**
  * Nested Paragraphs are flattened
  */
- fn test_hard_break_in_cell() {
+fn test_hard_break_in_cell() {
     assert_output_json_eq(
         r"<div><table ><tbody>
             <tr><td >A</td><td >B</td><td >C</td></tr>
