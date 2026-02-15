@@ -1,6 +1,7 @@
 mod colors;
 #[cfg(test)]
 mod combination;
+mod code_blocks;
 mod empty;
 mod headings;
 mod image;

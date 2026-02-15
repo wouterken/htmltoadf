@@ -38,7 +38,7 @@ lazy_static! {
     ),
     (
       String::from("codeBlock"),
-      AdfPermittedChildren::any(&["paragraph"])
+      AdfPermittedChildren::any(&["text"])
     ),
     (
       String::from("listItem"),
@@ -185,6 +185,10 @@ lazy_static! {
           attributes: AdfMarkAttributes::List(vec!())
         }
       ])
+    ),
+    (
+      "pre",
+      AdfContentType::from_name("codeBlock")
     ),
     (
       "code",

@@ -435,6 +435,11 @@ fn build_parent_path(leaf: &DocNode, node_list: &mut NodeList) -> (NodeHandle, V
             Err(next_node_handle) => current_node_handle = next_node_handle,
         }
     }
+    if let Some(parent_node) = node_list.node(current_node_handle) {
+        if parent_node.node_type == "codeBlock" {
+            marks.clear();
+        }
+    }
     remove_illegal_marks(&mut marks);
     (current_node_handle, marks)
 }
