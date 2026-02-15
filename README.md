@@ -229,8 +229,9 @@ The following features are implemented:
 * Run fmt, clippy, and tests
 * Compile binaries and create release
   * Requires: `cargo-zigbuild`, `cargo-xwin`, `zig`, and nightly toolchain
+  * Ensure Docker daemon is running before this step (the checklist does an amd64 image build)
   * `./release.sh`
-  * Or run `scripts/release_checklist.sh <version>` for local checks + amd64 Docker build
+  * Or run `sh scripts/release_checklist.sh <version>` for local checks + release artifacts + amd64 Docker build
 * Build and push Docker images
   * Multi-arch via buildx: `docker buildx build --platform linux/amd64,linux/arm64 --build-arg VERSION=<version> -t wouterken/html2adf:<version> -t wouterken/html2adf:latest --push .`
 * Build and push WASM NPM package

@@ -9,11 +9,11 @@ mkdir -p "releases/${RELEASE_NAME}"
 
 # Read targets from .targets file and build
 if [ -f .targets ]; then
-    while IFS= read -r target; do
+    while IFS= read -r target || [ -n "$target" ]; do
         rustup target add "${target}" --toolchain nightly
     done < .targets
 
-    while IFS= read -r target; do
+    while IFS= read -r target || [ -n "$target" ]; do
         if [ "${target}" = "x86_64-pc-windows-msvc" ]; then
             cargo xwin build --target "${target}" --release
             mkdir -p "releases/${RELEASE_NAME}/${target}"
