@@ -281,3 +281,137 @@ fn test_hard_break_in_cell() {
         }),
     );
 }
+
+#[test]
+fn test_table_cell_span_attributes() {
+    assert_output_json_eq(
+        r#"<table>
+            <tr><th colspan="2">Header</th></tr>
+            <tr><td rowspan="2">A</td><td>B</td></tr>
+            <tr><td>C</td></tr>
+        </table>"#,
+        json!({
+          "version": 1,
+          "type": "doc",
+          "content": [
+            {
+              "type": "table",
+              "content": [
+                {
+                  "type": "tableRow",
+                  "content": [
+                    {
+                      "type": "tableHeader",
+                      "attrs": {
+                        "colspan": 2
+                      },
+                      "content": [
+                        {
+                          "type": "paragraph",
+                          "content": [
+                            {
+                              "type": "text",
+                              "text": "Header"
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "type": "tableRow",
+                  "content": [
+                    {
+                      "type": "tableCell",
+                      "attrs": {
+                        "rowspan": 2
+                      },
+                      "content": [
+                        {
+                          "type": "paragraph",
+                          "content": [
+                            {
+                              "type": "text",
+                              "text": "A"
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "type": "tableCell",
+                      "content": [
+                        {
+                          "type": "paragraph",
+                          "content": [
+                            {
+                              "type": "text",
+                              "text": "B"
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "type": "tableRow",
+                  "content": [
+                    {
+                      "type": "tableCell",
+                      "content": [
+                        {
+                          "type": "paragraph",
+                          "content": [
+                            {
+                              "type": "text",
+                              "text": "C"
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }),
+    );
+}
+
+#[test]
+fn test_empty_table_cell_preserves_span_attributes() {
+    assert_output_json_eq(
+        r#"<table><tr><td colspan="2" rowspan="3"></td></tr></table>"#,
+        json!({
+          "version": 1,
+          "type": "doc",
+          "content": [
+            {
+              "type": "table",
+              "content": [
+                {
+                  "type": "tableRow",
+                  "content": [
+                    {
+                      "type": "tableCell",
+                      "attrs": {
+                        "colspan": 2,
+                        "rowspan": 3
+                      },
+                      "content": [
+                        {
+                          "type": "paragraph"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }),
+    );
+}

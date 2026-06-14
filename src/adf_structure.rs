@@ -6,6 +6,23 @@ use crate::types::{
     adf_permitted_children::AdfPermittedChildren,
 };
 
+fn extract_table_cell_attributes(node: &scraper::ElementRef) -> Vec<(String, Value)> {
+    ["colspan", "rowspan"]
+        .iter()
+        .filter_map(|attribute| {
+            node.value()
+                .attr(attribute)
+                .and_then(|value| value.parse::<u64>().ok())
+                .map(|value| {
+                    (
+                        (*attribute).to_string(),
+                        Value::Number(serde_json::Number::from(value)),
+                    )
+                })
+        })
+        .collect()
+}
+
 lazy_static! {
   /**
    * Placeholder empty child type. Does not permit any child types.
@@ -125,11 +142,11 @@ lazy_static! {
     ),
     (
       "th",
-      AdfContentType::from_name("tableHeader")
+      AdfContentType::from_name_and_attributes("tableHeader", extract_table_cell_attributes)
     ),
     (
       "td",
-      AdfContentType::from_name("tableCell")
+      AdfContentType::from_name_and_attributes("tableCell", extract_table_cell_attributes)
     ),
     (
       "iframe",
