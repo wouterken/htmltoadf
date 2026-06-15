@@ -224,20 +224,39 @@ The following features are implemented:
 - [ ] In built JSON Schema Validation
 
 ## Release Process
-* Increment version number in .toml and README
-* Update docs/index.html package version if needed
-* Run fmt, clippy, and tests
-* Compile binaries and create release
-  * Requires: `cargo-zigbuild`, `cargo-xwin`, `zig`, and nightly toolchain
-  * Ensure Docker daemon is running before this step (the checklist does an amd64 image build)
-  * `./release.sh`
-  * Or run `sh scripts/release_checklist.sh <version>` for local checks + release artifacts + amd64 Docker build
-* Build and push Docker images
-  * Multi-arch via buildx: `docker buildx build --platform linux/amd64,linux/arm64 --build-arg VERSION=<version> -t wouterken/html2adf:<version> -t wouterken/html2adf:latest --push .`
-* Build and push WASM NPM package
-* Push crate
-* Update dependency in demo page
-* Push to VCS
+1. Increment the version number in `Cargo.toml` and `README.md`.
+1. Update the demo dependency in `docs/index.html`.
+   Keep this step before the final VCS push. The demo page loads the npm package directly from unpkg, so pushing the page before the npm publish is live can break the demo.
+1. Run local validation and build release artifacts.
+   - Requires: `cargo-zigbuild`, `cargo-xwin`, `zig`, `wasm-pack`, `gh`, `npm`, Docker, and the nightly toolchain.
+   - Prefer rustup-managed tooling for wasm builds. If Homebrew Rust appears earlier in `PATH`, run `PATH="$HOME/.cargo/bin:$PATH" wasm-pack ...` so `wasm-pack` can see the installed `wasm32-unknown-unknown` target.
+   - Preflight checks:
+     - `cargo owner --list htmltoadf`
+     - `npm whoami --registry=https://registry.npmjs.org/`
+     - `docker info`
+     - `gh auth status`
+   - Run `sh scripts/release_checklist.sh <version>` for `fmt`, `clippy`, `test`, release artifacts, and an amd64 Docker smoke build.
+1. Build the wasm package.
+   - `PATH="$HOME/.cargo/bin:$PATH" wasm-pack build --release --target web --out-dir pkg`
+1. Publish registry artifacts in this order.
+   - Docker:
+     `docker buildx build --platform linux/amd64,linux/arm64 --build-arg VERSION=<version> -t wouterken/html2adf:<version> -t wouterken/html2adf:latest --push .`
+   - npm:
+     `npm publish ./pkg`
+     If npm publish is protected by 2FA, pass `--otp=<code>`.
+   - crates.io:
+     `cargo publish`
+1. Push to VCS after the registry publishes succeed.
+   - Push the release commit.
+   - Tag the release.
+   - Create the GitHub release and upload the release artifacts from `releases/<version>/`.
+   - GitHub release asset names should be target-prefixed, for example `x86_64-unknown-linux-gnu_html2adf`, to avoid collisions between files like `libhtmltoadf.rlib`.
+
+For a scripted publish flow after version bumping, validation, and release artifact generation, use:
+
+```bash
+sh scripts/release_publish.sh <version> [npm-otp]
+```
 
 ## Testing
 Run `cargo test` from the repository root.
